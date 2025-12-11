@@ -13,4 +13,5 @@
     
     $vista=new VistaPrincipal();
     $vista->cargarVista();
+    //Para el curso de Titulacion
 ?>
