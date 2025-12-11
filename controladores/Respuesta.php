@@ -9,10 +9,8 @@ class Respuesta
 
     public function guardarRespuesta()
     {
-        //var_dump($_POST,$_FILES);
         if (isset($_POST['descripcion'])) {
             $descripcion = trim($_POST['descripcion']);
-
             if (self::validarEntrada($descripcion) && self::validarImagen($_FILES['foto']['type'])) {
                 $ruta = NULL;
                 if (isset($_FILES['foto']['name']) && $_FILES['foto']['name'] != "") {
@@ -20,28 +18,32 @@ class Respuesta
                     $ruta = $directorio . time() . '.' . pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION);
                     move_uploaded_file($_FILES['foto']['tmp_name'], $ruta);
                 }
-                $datos = array(
+                $datos = [
                     'descripcion' => $descripcion,
                     'foto' => $ruta,
-                    'id_pregunta' => $_POST['id_pregunta'],
-                    'id_usuario' => 1
-                );
-                $respuesta = RespuestaModel::guardarRespuesta('respuesta', $datos);
-                $rut = trim(BASE_URL . "respuesta/" . $_POST['id_pregunta']);
+                    'id_usuario' => 1,
+                    'id_pregunta' => $_POST['id_pregunta']
+                ];
+                $respuesta = RespuestaModel::guardarRespuesta("respuesta", $datos);
+
+                $rut=BASE_URL.'respuesta/'.$_POST['id_pregunta'];
+
                 if ($respuesta) {
                     echo "<script>
-                        alert('La respuesta ha sido guardada exitosamente.');
-                        window.location='" . $rut . "';
-                    </script>";
+                            let text='Respuesta guardada correctamente';
+                            if(confirm(text)){
+                                window.location='". $rut ."';
+                            }
+                            </script>";
                 } else {
                     echo "<script>
-                        alert('Error al guardar la respuesta. Por favor, inténtelo de nuevo.');
-                    </script>";
+                            alert('Error al guardar la respuesta');
+                            </script>";
                 }
             } else {
                 echo "<script>
-                    alert('Error: Entrada inválida. Solo se permiten letras, números y algunos caracteres especiales.');
-                </script>";
+                        alert('El campo descripcion no debe llevar caracteres especiales');
+                        </script>";
             }
         }
     }
