@@ -26,13 +26,13 @@ class Respuesta
                 ];
                 $respuesta = RespuestaModel::guardarRespuesta("respuesta", $datos);
 
-                $rut=BASE_URL.'respuesta/'.$_POST['id_pregunta'];
+                $rut = BASE_URL . 'respuesta/' . $_POST['id_pregunta'];
 
                 if ($respuesta) {
                     echo "<script>
                             let text='Respuesta guardada correctamente';
                             if(confirm(text)){
-                                window.location='". $rut ."';
+                                window.location='" . $rut . "';
                             }
                             </script>";
                 } else {
@@ -60,5 +60,11 @@ class Respuesta
         } else {
             return true;
         }
+    }
+
+    static public function listarRespuestasUsuario()
+    {
+        $respuestas = RespuestaModel::contarRespuestasUsuario($_SESSION['id']);
+        return $respuestas;
     }
 }

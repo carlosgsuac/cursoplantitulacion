@@ -2,6 +2,9 @@
 //$preguntas = Pregunta::listarPreguntas('pregunta', 'id_usuario', $_SESSION['id']);
 $preguntas = Pregunta::listarPreguntasUsuario('pregunta', 'id_usuario', $_SESSION['id']);
 //var_dump($preguntas);
+$respuestas = Respuesta::listarRespuestasUsuario();
+//var_dump($respuestas);
+//exit;
 ?>
 <div class="content-wrapper">
     <div class="content-header">
@@ -36,10 +39,10 @@ $preguntas = Pregunta::listarPreguntasUsuario('pregunta', 'id_usuario', $_SESSIO
 
                         <ul class="list-group list-group-unbordered mb-3">
                             <li class="list-group-item">
-                                <b>Preguntas</b> <a class="float-right"><?= (count($preguntas) + 1) ?></a>
+                                <b>Preguntas</b> <a class="float-right"><?= (count($preguntas)) ?></a>
                             </li>
                             <li class="list-group-item">
-                                <b>Respuestas</b> <a class="float-right">5</a>
+                                <b>Respuestas</b> <a class="float-right"><?= $respuestas["cantidad"] ?></a>
                             </li>
                         </ul>
 
